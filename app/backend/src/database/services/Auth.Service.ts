@@ -18,7 +18,7 @@ export default class AuthService {
     return bcrypt.compareSync(pass, cryptoPass);
   }
 
-  async authUser({ email, password }: IAuthUser): Promise<string> {
+  private async authUser(email: string, password: string): Promise<IUser> {
     const { error } = this.authValidation.validate({ email, password });
 
     if (error) {
@@ -31,12 +31,22 @@ export default class AuthService {
       throw new errors.UnauthorizedError(ERROR_MESSAGE_EMAIL_PASSWORD);
     }
 
-    // if () {
-    //   throw new errors.UnauthorizedError(ERROR_MESSAGE_EMAIL_PASSWORD);
-    // }
+    return user.dataValues as IUser;
+  }
 
-    const token = createToken(user.dataValues as IUser);
+  async loginUser({ email, password }: IAuthUser): Promise<string> {
+    const user: IUser = await this.authUser(email, password);
+
+    const token: string = createToken(user);
 
     return token;
+  }
+
+  async validateUser({ email, password }: IAuthUser): Promise<string> {
+    // validar token
+
+    const user: IUser = await this.authUser(email, password);
+
+    return user.role;
   }
 }
