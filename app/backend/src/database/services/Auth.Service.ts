@@ -3,7 +3,7 @@ import * as errors from 'restify-errors';
 import * as bcrypt from 'bcryptjs';
 import { IAuthUser, IUser } from '../interface/Login.interfaces';
 import UsersModel from '../models/Users';
-import createToken from '../jwt/jwt.utils';
+import { createToken, validateToken } from '../jwt/jwt.utils';
 
 const ERROR_MESSAGE_EMAIL_PASSWORD = 'Incorrect email or password';
 const ERROR_MESSAGE_REQUIRED = 'All fields must be filled';
@@ -42,10 +42,13 @@ export default class AuthService {
     return token;
   }
 
-  async validateUser({ email, password }: IAuthUser): Promise<string> {
-    // validar token
+  private decode = (token: string): IUser => validateToken(token);
 
-    const user: IUser = await this.authUser(email, password);
+  async validateUser(token: string): Promise<string> {
+    // validar token
+    const { id } = this.decode(token);
+
+    const user = await UsersModel.findByPk(id) as IUser;
 
     return user.role;
   }

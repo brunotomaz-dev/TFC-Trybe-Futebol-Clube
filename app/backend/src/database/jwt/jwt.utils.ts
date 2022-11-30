@@ -1,8 +1,9 @@
 import 'dotenv/config';
 import * as jwt from 'jsonwebtoken';
+import * as errors from 'restify-errors';
 import { IUser } from '../interface/Login.interfaces';
 
-export default function createToken(obj: IUser): string {
+export function createToken(obj: IUser): string {
   const SECRET_KEY: jwt.Secret = process.env.JWT_SECRET as jwt.Secret;
   const { password, ...newObj } = obj;
 
@@ -12,4 +13,15 @@ export default function createToken(obj: IUser): string {
   });
 
   return token;
+}
+
+export function validateToken(token: string): IUser {
+  const SECRET_KEY: jwt.Secret = process.env.JWT_SECRET as jwt.Secret;
+
+  try {
+    const decode = jwt.verify(token, SECRET_KEY);
+    return decode as IUser;
+  } catch (err) {
+    throw new errors.UnauthorizedError('Invalid Token');
+  }
 }

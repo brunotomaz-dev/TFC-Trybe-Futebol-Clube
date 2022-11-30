@@ -5,7 +5,7 @@ export default class ValidateLoginController {
   private authService = new AuthService();
 
   async validateLogin(req: Request, res: Response) {
-    const role = await this.authService.validateUser(req.body);
+    const role = await this.authService.validateUser(req.headers.authorization as string);
 
     res.status(200).json({ role });
   }
