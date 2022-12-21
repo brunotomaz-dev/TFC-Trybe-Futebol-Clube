@@ -33,7 +33,7 @@ describe('Testa o método GET em /teams', () => {
       .request(app)
       .get('/teams');
     
-    expect(chaiHttpResponse.body).to.be.equal(teamsMock.allTeams)
+    expect(chaiHttpResponse.body).to.be.deep.equal(teamsMock.allTeams)
     expect(chaiHttpResponse.status).to.be.deep.equal(200)
     expect(chaiHttpResponse).to.have.status(200)
   })
