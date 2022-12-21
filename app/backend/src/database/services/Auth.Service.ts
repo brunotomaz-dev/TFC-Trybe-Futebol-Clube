@@ -30,8 +30,7 @@ export default class AuthService {
     if (!user || !AuthService.authPassword(password, user.password)) {
       throw new errors.UnauthorizedError(ERROR_MESSAGE_EMAIL_PASSWORD);
     }
-
-    return user.dataValues as IUser;
+    return user as IUser;
   }
 
   async loginUser({ email, password }: IAuthUser): Promise<string> {

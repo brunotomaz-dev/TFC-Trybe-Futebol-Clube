@@ -1,24 +1,24 @@
 const user1  = {
-  id: 1,
-  username: 'Admin',
-  role: 'admin',
-  email: 'admin@admin.com',
-  password: '$2a$08$xi.Hxk1czAO0nZR..B393u10aED0RQ1N3PAEXQ7HxtLjKPEZBu.PW'
+  id: 2,
+  username: 'User',
+  role: 'user',
+  email: 'user@user.com',
+  password: '$2a$08$Y8Abi8jXvsXyqm.rmp0B.uQBA5qUz7T6Ghlg/CvVr/gLxYj5UAZVO'
 }
 
 const validUser1 = {
-  password: 'secret_admin',
-  email: 'admin@admin.com',
+  "email": "user@user.com",
+  "password": "secret_user" 
 }
 
 const invalidPasswordUser1 = {
-  password: 'secret',
-  email: 'admin@admin.com',
+  "password": "secret",
+  "email": "admin@admin.com",
 }
 
 const invalidEmailUser1 = {
-  password: 'secret_admin',
-  email: 'adm@admin.com',
+  'password': 'secret_admin',
+  'email': 'adm@admin.com',
 }
 
 const token: string = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9eyJpZCI6MSwicm9sZSI6ImFkbWluIiwiaWF0IjoxNjU0NTI3MTg5fQ.XS_9AA82iNoiVaASi0NtJpqOQ_gHSHhxrpIdigiT-fc"

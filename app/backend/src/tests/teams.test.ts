@@ -21,7 +21,7 @@ describe('Testa o método GET em /teams', () => {
   before(async () => {
     sinon
       .stub(Teams, "findAll")
-      .resolves(teamsMock.allTeams as Teams);
+      .resolves(teamsMock.allTeams as Teams[]);
   });
 
   after(()=>{

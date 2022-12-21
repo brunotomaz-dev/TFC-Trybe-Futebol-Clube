@@ -33,7 +33,9 @@ describe('Teste método POST em /login', () => {
     chaiHttpResponse = await chai
        .request(app)
        .post('/login')
-       .send({ ...loginMock.validUser1 })
+       .send(loginMock.validUser1)
+
+    console.log(chaiHttpResponse.body)
 
     expect(chaiHttpResponse.body).to.haveOwnProperty('token')
     expect(chaiHttpResponse.status).to.be.deep.equal(200)
@@ -44,7 +46,7 @@ describe('Teste método POST em /login', () => {
     chaiHttpResponse = await chai
        .request(app)
        .post('/login')
-       .send({ ...loginMock.invalidPasswordUser1 })
+       .send(loginMock.invalidPasswordUser1)
 
     expect(chaiHttpResponse.status).to.be.deep.equal(401)
     expect(chaiHttpResponse.body.message).to.be.deep.equal('Incorrect email or password')
@@ -54,7 +56,7 @@ describe('Teste método POST em /login', () => {
     chaiHttpResponse = await chai
        .request(app)
        .post('/login')
-       .send({ ...loginMock.invalidEmailUser1 })
+       .send(loginMock.invalidEmailUser1)
 
     expect(chaiHttpResponse.status).to.be.deep.equal(401)
     expect(chaiHttpResponse.body.message).to.be.deep.equal('Incorrect email or password')
@@ -64,7 +66,7 @@ describe('Teste método POST em /login', () => {
     chaiHttpResponse = await chai
        .request(app)
        .post('/login')
-       .send({ password: 'secret_admin' })
+       .send({ 'password': 'secret_admin' })
 
     expect(chaiHttpResponse.status).to.be.deep.equal(400)
     expect(chaiHttpResponse.body.message).to.be.deep.equal('All fields must be filled')
@@ -74,7 +76,7 @@ describe('Teste método POST em /login', () => {
     chaiHttpResponse = await chai
        .request(app)
        .post('/login')
-       .send({ email: 'admin@admin.com' })
+       .send({ 'email': 'admin@admin.com' })
 
     expect(chaiHttpResponse.status).to.be.deep.equal(400)
     expect(chaiHttpResponse.body.message).to.be.deep.equal('All fields must be filled')
