@@ -1,4 +1,5 @@
-import { IMatch } from '../interface/Matches.interface';
+import * as errors from 'restify-errors';
+import { IMatch, INewMatchinProgress } from '../interface/Matches.interface';
 import MatchesModel from '../models/Matches';
 
 export default class MatchService {
@@ -34,5 +35,23 @@ export default class MatchService {
     });
 
     return matches;
+  }
+
+  async createMatch(match: INewMatchinProgress): Promise<IMatch> {
+    const newMatch = await this.matchesModel.create({ ...match, inProgress: true });
+
+    return newMatch;
+  }
+
+  async updateMatchinProgress(id: number): Promise<void> {
+    const [affectedCount] = await this.matchesModel.update(
+      { inProgress: false },
+      { where: { id } },
+    );
+
+    console.log(affectedCount);
+    if (affectedCount === 0) {
+      throw new errors.BadRequestError({ message: 'Match already had finished status' });
+    }
   }
 }
