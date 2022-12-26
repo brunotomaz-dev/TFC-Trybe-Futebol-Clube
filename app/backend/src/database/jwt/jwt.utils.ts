@@ -22,6 +22,6 @@ export function validateToken(token: string): IUser {
     const decode = jwt.verify(token, SECRET_KEY);
     return decode as IUser;
   } catch (err) {
-    throw new errors.UnauthorizedError('Invalid Token');
+    throw new errors.UnauthorizedError('Token must be a valid token');
   }
 }

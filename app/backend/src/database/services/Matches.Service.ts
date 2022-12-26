@@ -42,6 +42,7 @@ export default class MatchService {
     const matchValidations = new MatchValidations(match.homeTeam, match.awayTeam);
 
     matchValidations.verifyDuplicateTeam();
+    await matchValidations.verifyIfTeamsExists();
 
     const newMatch = await this.matchesModel.create({ ...match, inProgress: true });
 
