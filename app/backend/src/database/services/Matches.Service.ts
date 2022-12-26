@@ -1,6 +1,7 @@
 import * as errors from 'restify-errors';
 import { IMatch, INewMatchinProgress } from '../interface/Matches.interface';
 import MatchesModel from '../models/Matches';
+import MatchValidations from './validations/match.validations';
 
 export default class MatchService {
   /*
@@ -38,6 +39,10 @@ export default class MatchService {
   }
 
   async createMatch(match: INewMatchinProgress): Promise<IMatch> {
+    const matchValidations = new MatchValidations(match.homeTeam, match.awayTeam);
+
+    matchValidations.verifyDuplicateTeam();
+
     const newMatch = await this.matchesModel.create({ ...match, inProgress: true });
 
     return newMatch;
@@ -51,7 +56,7 @@ export default class MatchService {
 
     console.log(affectedCount);
     if (affectedCount === 0) {
-      throw new errors.BadRequestError({ message: 'Match already had finished status' });
+      throw new errors.BadRequestError('Match already had finished status');
     }
   }
 }
