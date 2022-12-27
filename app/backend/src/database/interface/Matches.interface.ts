@@ -3,9 +3,12 @@ export interface IMatch extends INewMatchinProgress {
   inProgress: boolean;
 }
 
-export interface INewMatchinProgress {
+export interface INewMatchinProgress extends IGoals {
   homeTeam: number;
-  homeTeamGoals: number;
   awayTeam: number;
+}
+
+export interface IGoals {
+  homeTeamGoals: number;
   awayTeamGoals: number;
 }

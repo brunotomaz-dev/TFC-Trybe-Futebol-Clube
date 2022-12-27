@@ -1,5 +1,5 @@
 import * as errors from 'restify-errors';
-import { IMatch, INewMatchinProgress } from '../interface/Matches.interface';
+import { IGoals, IMatch, INewMatchinProgress } from '../interface/Matches.interface';
 import MatchesModel from '../models/Matches';
 import MatchValidations from './validations/match.validations';
 
@@ -55,9 +55,21 @@ export default class MatchService {
       { where: { id } },
     );
 
-    console.log(affectedCount);
     if (affectedCount === 0) {
       throw new errors.BadRequestError('Match already had finished status');
+    }
+  }
+
+  async updateMatch(id: number, goals: IGoals): Promise<void> {
+    const { awayTeamGoals, homeTeamGoals } = goals;
+
+    const [affectedCount] = await this.matchesModel.update(
+      { awayTeamGoals, homeTeamGoals },
+      { where: { id } },
+    );
+
+    if (affectedCount === 0) {
+      throw new errors.BadRequestError('atualization fail');
     }
   }
 }
