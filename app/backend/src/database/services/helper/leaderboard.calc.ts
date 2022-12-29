@@ -18,6 +18,12 @@ export const efficiency = (h: number, a: number, t: number, j: number): number =
   return Number(calcEfficiency.toFixed(2));
 };
 
+export const efficiencyTotal = (p: number, j: number): number => {
+  const calcEfficiency = (p / (j * 3)) * 100;
+
+  return Number(calcEfficiency.toFixed(2));
+};
+
 export const winOrLose = (gp: number, gc: number, filter: winsLosses) => {
   const goals = goalsBalance(gp, gc);
 

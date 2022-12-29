@@ -6,5 +6,6 @@ const leaderBoardController = new LeaderBoardController();
 
 leaderBoardRouter.get('/home', (req, res) => leaderBoardController.homeLeaderboard(req, res));
 leaderBoardRouter.get('/away', (req, res) => leaderBoardController.awayLeaderboard(req, res));
+leaderBoardRouter.get('/', (req, res) => leaderBoardController.fullLeaderboard(req, res));
 
 export default leaderBoardRouter;

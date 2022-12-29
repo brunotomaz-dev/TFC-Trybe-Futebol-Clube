@@ -26,18 +26,24 @@ export default class LeaderBoardService {
     return allMatchsFinished;
   }
 
-  public async leaderBoard(filter: homeAway) {
+  public async leaderBoard(filter?: homeAway) {
     const allMatchsFinished = await this.getMatches();
 
     if (filter === 'home') {
-      const leaderboard = await this.getLeaderboard(allMatchsFinished);
-      return LeaderBoardService.order(leaderboard);
+      const homeLeaderboard = await this.getLeaderboard(allMatchsFinished);
+      return LeaderBoardService.order(homeLeaderboard);
     }
 
     if (filter === 'away') {
       const leaderboard = await this.getLeaderboard(allMatchsFinished, 'away');
       return LeaderBoardService.order(leaderboard);
     }
+
+    const home = await this.getLeaderboard(allMatchsFinished);
+    const away = await this.getLeaderboard(allMatchsFinished, 'away');
+    const leaderBoardFull = this.formLeaderboardFull(home, away);
+
+    return LeaderBoardService.order(leaderBoardFull);
   }
 
   private static order(data: ILeaderboard[]): ILeaderboard[] {
@@ -135,7 +141,22 @@ export default class LeaderBoardService {
     return newleaderBoard;
   };
 
-  private formLeaderboardFull = () => {
-
-  };
+  private formLeaderboardFull = (home: ILeaderboard[], away: ILeaderboard[]) => home.map((team) => {
+    const boardAway = away.find(({ name }) => team.name === name) as ILeaderboard;
+    return {
+      name: team.name,
+      totalPoints: team.totalPoints + boardAway.totalPoints,
+      totalGames: team.totalGames + boardAway.totalGames,
+      totalVictories: team.totalVictories + boardAway.totalVictories,
+      totalDraws: team.totalDraws + boardAway.totalDraws,
+      totalLosses: team.totalLosses + boardAway.totalLosses,
+      goalsFavor: team.goalsFavor + boardAway.goalsFavor,
+      goalsOwn: team.goalsOwn + boardAway.goalsOwn,
+      goalsBalance: team.goalsBalance + boardAway.goalsBalance,
+      efficiency: calc.efficiencyTotal(
+        (team.totalPoints + boardAway.totalPoints),
+        (team.totalGames + boardAway.totalGames),
+      ),
+    };
+  });
 }

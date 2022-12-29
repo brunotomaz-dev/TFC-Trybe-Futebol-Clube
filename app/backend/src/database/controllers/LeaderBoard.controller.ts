@@ -15,4 +15,10 @@ export default class LeaderBoardController {
 
     res.status(200).json(awayBoard);
   }
+
+  async fullLeaderboard(req: Request, res: Response) {
+    const fullBoard = await this.leaderBoardService.leaderBoard();
+
+    res.status(200).json(fullBoard);
+  }
 }
