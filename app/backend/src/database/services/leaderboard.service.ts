@@ -1,4 +1,4 @@
-import { ILeaderboard } from '../interface/Leaderboard.interface';
+import { IFullLeaderGoals, ILeaderboard } from '../interface/Leaderboard.interface';
 import { IMatch } from '../interface/Matches.interface';
 import MatchesModel from '../models/Matches';
 import TeamsModel from '../models/Teams';
@@ -87,7 +87,9 @@ export default class LeaderBoardService {
 
     const getMatchByTeam = matches.filter(({ homeTeam }) => homeTeam === id);
     getMatchByTeam.forEach((match) => {
-      test = this.formLeaderboard(match, teamName, getMatchByTeam, test);
+      const { awayTeamGoals: gc, homeTeamGoals: gp } = match;
+      const homeMatch = { gp, gc };
+      test = this.formLeaderboard(homeMatch, teamName, getMatchByTeam, test);
     });
 
     return test;
@@ -103,31 +105,37 @@ export default class LeaderBoardService {
 
     const getMatchByTeam = matches.filter(({ awayTeam }) => awayTeam === id);
     getMatchByTeam.forEach((match) => {
-      test = this.formLeaderboard(match, teamName, getMatchByTeam, test);
+      const { awayTeamGoals: gp, homeTeamGoals: gc } = match;
+      const awayMatch = { gp, gc };
+      test = this.formLeaderboard(awayMatch, teamName, getMatchByTeam, test);
     });
 
     return test;
   }
 
   private formLeaderboard = (
-    { awayTeamGoals: GC, homeTeamGoals: GP }: IMatch,
+    { gp, gc }: IFullLeaderGoals,
     teamName: string,
     allMatch: IMatch[],
     prev: ILeaderboard,
   ) => {
     const newleaderBoard = {
       name: teamName,
-      totalPoints: prev.totalPoints + calc.totalPoints(GP, GC),
+      totalPoints: prev.totalPoints + calc.totalPoints(gp, gc),
       totalGames: allMatch.length,
-      totalVictories: prev.totalVictories + calc.winOrLose(GP, GC, 'wins'),
-      totalDraws: prev.totalDraws + calc.winOrLose(GP, GC, 'draws'),
-      totalLosses: prev.totalLosses + calc.winOrLose(GP, GC, 'losses'),
-      goalsFavor: prev.goalsFavor + GP,
-      goalsOwn: prev.goalsOwn + GC,
-      goalsBalance: prev.goalsBalance + calc.goalsBalance(GP, GC),
-      efficiency: calc.efficiency(GP, GC, prev.totalPoints, allMatch.length),
+      totalVictories: prev.totalVictories + calc.winOrLose(gp, gc, 'wins'),
+      totalDraws: prev.totalDraws + calc.winOrLose(gp, gc, 'draws'),
+      totalLosses: prev.totalLosses + calc.winOrLose(gp, gc, 'losses'),
+      goalsFavor: prev.goalsFavor + gp,
+      goalsOwn: prev.goalsOwn + gc,
+      goalsBalance: prev.goalsBalance + calc.goalsBalance(gp, gc),
+      efficiency: calc.efficiency(gp, gc, prev.totalPoints, allMatch.length),
     };
 
     return newleaderBoard;
+  };
+
+  private formLeaderboardFull = () => {
+
   };
 }
