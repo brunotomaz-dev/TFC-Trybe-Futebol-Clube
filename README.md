@@ -109,14 +109,19 @@ Na sua máquina você deve ter:
 - Entre na pasta do repositório que você acabou de clonar:
   - `cd TFC-Trybe-Futebol-Clube`
 
-2. Instale as dependências na pasta raiz
+2. Instale as dependências na app
 
 - `npm install`.
 
-3. Rode o docker-compose - na pasta raiz do projeto
+3. Rode o docker-compose - na pasta app
 
 - `npm run compose:up`.
 
-4. O servidor back-end deve ser inicializado no comando anterior. Para acessar a página da aplicação entre em `http://localhost:3000/` no seu navegador.
+4. O servidor back-end deve ser inicializado no comando anterior. A página da aplicação deve abrir automaticamente. Para acessar manualmente a página da aplicação entre em `http://localhost:3000/` no seu navegador.
+
+5. Na página de login acesse como
+
+- administrador: Usuário: Admin, Email: admin@admin.com, Senha: secret_adm,
+- user: Usuário: User, Email: user@user.com, Senha: secret_user
 
 Obs. Caso precise inicializar o back-end manualmente, na pasta do back-end rode `npm start`
