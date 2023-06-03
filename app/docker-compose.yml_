@@ -22,34 +22,34 @@ services:
       - 3001:3001
     platform: linux/x86_64
     working_dir: /app-backend
-    # depends_on:
-    #   db:
-    #     condition: service_healthy
+    depends_on:
+      db:
+        condition: service_healthy
     environment:
-      # - PORT=3001
+      - PORT=3001
       - JWT_SECRET=jwt_secret
       # Os dados abaixo se referem ao container `db`
       # Dica: Relembre aqui da comunicação interna entre containers
-      # - MYSQLUSER=root
-      # - MYSQLPASSWORD=123456
-      # - MYSQLHOST=db
-      # - MYSQLPORT=3306
-    # healthcheck:
-    #   test: ['CMD', 'lsof', '-t', '-i:3001'] # Caso utilize outra porta interna para o back, altere ela aqui também
-    #   timeout: 10s
-    #   retries: 5
-  # db:
-  #   image: mysql:8.0.21
-  #   container_name: db
-  #   platform: linux/x86_64
-  #   ports:
-  #     - 3002:3306
-  #   environment:
-  #     - MYSQL_ROOT_PASSWORD=123456
-  #   restart: 'always'
-  #   healthcheck:
-  #     test: ['CMD', 'mysqladmin', 'ping', '-h', 'localhost'] # Deve aguardar o banco ficar operacional
-  #     timeout: 10s
-  #     retries: 5
-  #   cap_add:
-  #     - SYS_NICE # Deve omitir alertas menores
+      - MYSQLUSER=root
+      - MYSQLPASSWORD=123456
+      - MYSQLHOST=db
+      - MYSQLPORT=3306
+    healthcheck:
+      test: ['CMD', 'lsof', '-t', '-i:3001'] # Caso utilize outra porta interna para o back, altere ela aqui também
+      timeout: 10s
+      retries: 5
+  db:
+    image: mysql:8.0.21
+    container_name: db
+    platform: linux/x86_64
+    ports:
+      - 3002:3306
+    environment:
+      - MYSQL_ROOT_PASSWORD=123456
+    restart: 'always'
+    healthcheck:
+      test: ['CMD', 'mysqladmin', 'ping', '-h', 'localhost'] # Deve aguardar o banco ficar operacional
+      timeout: 10s
+      retries: 5
+    cap_add:
+      - SYS_NICE # Deve omitir alertas menores
