@@ -8,10 +8,10 @@ const config: Options = {
   host: process.env.MYSQLHOST,
   port: Number(process.env.MYSQLPORT),
   dialect: 'mysql',
-  dialectOptions: {
-    timezone: 'Z',
-  },
-  logging: false,
 }
 
-module.exports = config;
+module.exports = {
+  development: config,
+  test: config,
+  production: config,
+};
