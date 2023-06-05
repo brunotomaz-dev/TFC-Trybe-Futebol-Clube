@@ -1,4 +1,4 @@
-import "dotenv.config";
+import "dotenv/config";
 import { Sequelize } from 'sequelize';
 // import * as config from '../config/database';
 const env = process.env.NODE_ENV || 'development';
