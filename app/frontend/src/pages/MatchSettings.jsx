@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import CreateNewGame from '../components/CreateNewGame';
 import EditGame from '../components/EditGame';
 import Header from '../components/Header';
-import MatchesBtn from '../components/MatchesBtn';
 import Loading from '../components/Loading';
+import MatchesBtn from '../components/MatchesBtn';
 import api, { requestData, setToken } from '../services/requests';
 import '../styles/pages/matchSettings.css';
 
@@ -68,6 +68,7 @@ const MatchSettings = () => {
 
   const updateMatch = async (id, updateGoals) => {
     await api.patch(`/matches/${id}`, { ...updateGoals });
+    navigate('/matches')
   };
   const finishMatch = async (id) => {
     await api.patch(`/matches/${id}/finish`);

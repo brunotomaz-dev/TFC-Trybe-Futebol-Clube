@@ -121,7 +121,7 @@ Na sua máquina você deve ter:
 
 5. Na página de login acesse como
 
-- administrador: Usuário: Admin, Email: admin@admin.com, Senha: secret_adm,
+- administrador: Usuário: Admin, Email: admin@admin.com, Senha: secret_admin,
 - user: Usuário: User, Email: user@user.com, Senha: secret_user
 
 Obs. Caso precise inicializar o back-end manualmente, na pasta do back-end rode `npm start`
