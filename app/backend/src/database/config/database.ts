@@ -1,7 +1,7 @@
 import 'dotenv/config';
 import { Options } from 'sequelize';
 
-const config: Options = {
+const cfg: Options = {
   username: process.env.MYSQLUSER,
   password: process.env.MYSQLPASSWORD,
   database: process.env.MYSQLDATABASE || 'TRYBE_FUTEBOL_CLUBE',
@@ -10,8 +10,10 @@ const config: Options = {
   dialect: 'mysql',
 }
 
-module.exports = {
-  development: config,
-  test: config,
-  production: config,
-};
+const config = {
+  development: cfg,
+  test: cfg,
+  production: cfg
+}
+
+module.exports = config;
