@@ -7,6 +7,7 @@ const config: Options = {
   database: process.env.MYSQLDATABASE || 'TRYBE_FUTEBOL_CLUBE',
   host: process.env.MYSQLHOST,
   port: Number(process.env.MYSQLPORT),
+  dialect: 'mysql',
 }
 
 module.exports = {
