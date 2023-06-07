@@ -42,7 +42,7 @@ Neste projeto, fui capaz de:
 
 - Usar a ferramenta JWT para autenticação usando um token.
 
-- Utilizar a ferramente brcrypt para criptografar a senha a ser guardada no banco de dados.
+- Utilizar a ferramente bcrypt para criptografar a senha a ser guardada no banco de dados.
 
   <br>
 
